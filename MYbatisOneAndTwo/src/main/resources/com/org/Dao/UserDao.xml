@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.org.Dao.UserDao">
+    <select id="SelectById" resultMap="SelectByIdMap">
+        select  b.*,a.* from A a,B b where b.uid=a.id
+    </select>
+    <resultMap id="SelectByIdMap" type="com.org.Bean.UserB">
+        <result column="uid" property="uid"/>
+        <result column="department" property="department"/>
+<!--         property 中的属性名必须是和UserB中的变量名一直才行-->
+<!--        <association property="userA" javaType="com.org.Bean.UserA">
+            执行的顺序是，先找到在com.org.Bean.UserB 中变量名为userA的变量，通过配置的javatype中的全限地址找到，并加载
+    -->
+        <association property="userA" javaType="com.org.Bean.UserA">
+            <result column="id" property="id"/>
+            <result column="name" property="name"/>
+            <result column="sex" property="sex"/>
+            <result column="address" property="address"/>
+            <result column="b_id" property="b_id"/>
+        </association>
+    </resultMap>
+</mapper>

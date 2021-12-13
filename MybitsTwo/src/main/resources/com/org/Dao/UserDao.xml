@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.org.Dao.UserDao">
+
+<!--    一对多-->
+<!--    如果是在POJO类中嵌套了对象，那么在这就得使用resultMap的方式，还有就是，在查询的时候一定要重写toString-->
+    <select id="FindAllByIdOnAndTwo" resultMap="UserMap">
+        select * from A a  left  join B b  on b.uid=a.id;
+    </select>
+
+<!--     在resultMap中id表示上面的select中的resultMap的名字 ，type表示的子类中也就是类里面写了对象的那个类的路径-->
+    <resultMap id="UserMap" type="com.org.Bean.UserB">
+<!--        数据库中为uid的column(字段)里面就装property（属性）uid（类里面的变量名）-->
+        <result column="uid" property="uid"/>
+        <result column="department" property="department"/>
+<!-- association用于关联加载的对象，property为需要加载对象的变量名 ， javaType为需要加载对应的类型   -->
+        <!-- collection用于关联加载的集合，property为需要加载对象的变量名 ， ofType为需要加载对应List集合  -->
+        <collection property="user" ofType="com.org.Bean.User">
+            <result column="id" property="id"/>
+            <result column="name" property="name"/>
+            <result column="sex" property="sex"/>
+            <result column="address" property="address"/>
+            <result column="b_id" property="b_id"/>
+        </collection>
+    </resultMap>
+</mapper>

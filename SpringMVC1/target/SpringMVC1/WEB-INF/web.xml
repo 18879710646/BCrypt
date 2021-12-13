@@ -1,0 +1,42 @@
+<!DOCTYPE web-app PUBLIC
+ "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
+ "http://java.sun.com/dtd/web-app_2_3.dtd" >
+
+<web-app>
+
+  <filter>
+    <filter-name>characterEncodingFilter</filter-name>
+    <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+    <init-param>
+      <param-name>encoding</param-name>
+      <param-value>UTF-8</param-value>
+    </init-param>
+  </filter>
+  <filter-mapping>
+    <filter-name>characterEncodingFilter</filter-name>
+    <!-- /*匹配全部-->
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
+  <servlet>
+    <servlet-name>dispatcherServlet</servlet-name>
+    <!-- DispatcherServlet前端控制器 用来扫描出视图解析器的-->
+    <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+    <init-param>
+      <param-name>contextConfigLocation</param-name>
+      <param-value>classpath:springmvc.xml</param-value>
+    </init-param>
+
+    <!-- 执行优先级-->
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+  <!-- 解析/开头解析-->
+<!--  映射，请求路径 跟url-pattern匹配时，进入到servelt中-->
+  <servlet-mapping>
+<!--    这里可以看作一
+种拦截器，通过改变Springmvc的拦截方式来做到不拦截静态文件（.html,.js.css等）-->
+    <!-- 如果是添加的是*.do的话，那么要重新定义一个拦截方法，方法后面放行，才会起作用，不然的话是会拦截所有的请求的，，静态文件是不会被拦截的-->
+    <servlet-name>dispatcherServlet</servlet-name>
+    <url-pattern>/</url-pattern>
+  </servlet-mapping>
+</web-app>
+

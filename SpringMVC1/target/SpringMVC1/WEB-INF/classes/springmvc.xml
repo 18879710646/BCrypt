@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:mv="http://www.springframework.org/schema/mvc"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd">
+     <!-- 本来在tomcat中就可以加载静态文件的，
+     但是在DispathSevelt中默认关闭了tomcat的默认所以我必须重新交给tomcat中原生态的servlet处理-->
+   <!-- <mvc:default-servlet-handler/>
+    <mvc:annotation-driven/>
+    -->
+<!--    上面的mvc显示的时使用tomcat默认的拦截方式，默认拦截方式是会拦截到静态页面的（.html,.js.css等）,所以我们要在tomcat的默认拦截中重新定义哪些是不被拦截的 -->
+    <!-- location:webapp目录下,mapping:匹配请求路径的格式-->
+    <!--
+    <mvc:resources mapping="/js/**" location="/js/"/>
+    <mvc:resources mapping="/css/**" location="/css/"/>
+    -->
+    <mvc:default-servlet-handler/>
+    <mvc:annotation-driven/>
+
+    <!-- 开启组件扫描,主要是扫描Controller这个类-->
+    <context:component-scan base-package="com.itheima.Controller"/>
+    <!-- 配置内部资源视图解析器   InternalResourceViewResolver-->
+    <!--prefix+Controller返回的值+suffix  拼接真实路径-->
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="prefix" value="/page/"/>
+        <property name="suffix" value=".jsp"/>
+    </bean>
+
+
+</beans>

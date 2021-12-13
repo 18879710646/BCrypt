@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--namespace中填写的是全限接口名-->
+<!-- <select>中的Id填写的是接口中方法的名，resultype表示为传出的数据类型，parameterType表示的是传进来的参数数据类型，也就是在接口方法中的参数的类型-->
+<mapper namespace="com.org.Dao.Userdao">
+    <cache/>
+<!--    查询出全部数据量-->
+<!--    这里中的cache表示的是否开启二级缓存。     usecache 表示的是该sql语句是否使用二级缓存-->
+    <select id="findAll" resultType="com.org.bean.User"  useCache="true">
+        select * from mybitsfirst;
+    </select>
+<!--  根据id来查询数据-->
+    <select id="findId" parameterType="int" resultType="com.org.bean.User">
+        select * from mybitsfirst where uid=#{id};
+    </select>
+<!--    添加数据-->
+    <insert id="findAdd" parameterType="com.org.bean.User" keyProperty="uid" useGeneratedKeys="true">
+        INSERT INTO mybitsfirst(username,sex,birthday,address) VALUES (#{username},#{sex},#{birthday},#{address});
+    </insert>
+
+<!--    根据id来删除数据-->
+    <delete id="deleteId" parameterType="int" >
+        delete  from mybitsfirst  where uid=#{id};
+    </delete>
+<!--     模糊查询#-->
+    <select id="findlikeId" parameterType="string" resultType="com.org.bean.User">
+        select * from mybitsfirst where username like #{username};
+    </select>
+
+    <!--     模糊查询$-->
+    <select id="findlikeId2" parameterType="string" resultType="com.org.bean.User">
+        select * from mybitsfirst where username like '${value}';
+    </select>
+<!--    更新数据，只要写上变量名就行了-->
+    <update id="UploadById" parameterType="com.org.bean.User" >
+        update mybitsfirst set username=#{username},sex=#{sex},birthday=#{birthday},address=#{address} where uid=#{uid};
+    </update>
+
+<!--    动态Sql设置查询,因为一条sql语句中只能使用一次where所以为了防止在多if的情况下，where 1=1-->
+    <select id="findAllsqlif" parameterType="com.org.bean.User" resultType="com.org.bean.User">
+        select * from mybitsfirst where 1=1
+      <if test="uid > 0">
+        AND  uid=#{uid}
+    </if>
+    <if test="username != null">
+        and username=#{username}
+    </if>
+    </select>
+
+<!--    设置动态sql（where）-->
+    <select id="findAllWhere" parameterType="com.org.bean.User" resultType="com.org.bean.User">
+        select * from mybitsfirst
+        <where>
+            <if test="uid >0">
+                and uid=#{uid}
+            </if>
+            <if test="username != null">
+                and username=#{username}
+            </if>
+        </where>
+    </select>
+
+<!--    设置动态sql（forench）-->
+    <!--
+               collection :遍历的集合，这里写参数的名字
+               item : 遍历出来的每一个元素，用它来接收
+               open : 表示在where后面开始拼接的内容
+               close :整个sql语句最后结束的内容
+               separtor: 追加的内容，在open 和  close中间的数据分隔符
+               #{uid} ： 就是在()里面的内容
+               当整段SQL语句编译完成之后，就变成了这样：
+               select * from t_user where uid in(1,2,3)
+            -->
+    <select id="findAllForench" parameterType="List" resultType="com.org.bean.User">
+        select  * from mybitsfirst
+        <where>
+            <foreach collection="list" item="uid" open="uid in (" close=")" separator=",">
+                    #{uid}
+            </foreach>
+        </where>
+    </select>
+</mapper>

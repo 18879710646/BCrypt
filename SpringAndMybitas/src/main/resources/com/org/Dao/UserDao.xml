@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.org.Dao.UserDao">
+    <select id="Select" resultMap="seluser">
+        select a.*,b.* from A a left join B b on a.b_id=b.id;
+    </select>
+   <resultMap id="seluser" type="com.org.Bean.A">
+       <result column="id" property="id"/>
+       <result column="name" property="name"/>
+       <result column="sex" property="sex"/>
+       <result column="address" property="address"/>
+       <result column="b_id" property="b_id"/>
+       <association property="b" javaType="com.org.Bean.B">
+           <result column="id" property="id"/>
+           <result column="role" property="role"/>
+       </association>
+   </resultMap>
+</mapper>

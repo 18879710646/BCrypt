@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mvc="http://www.springframework.org/schema/context"
+       xmlns:context="http://www.springframework.org/schema/mvc"
+       xmlns:contxt="http://www.springframework.org/schema/mvc"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd">
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver" id="internalResourceViewResolver">
+        <property name="prefix" value="/page/"/>
+        <property name="suffix" value=".jsp"/>
+    </bean>
+    <mvc:component-scan base-package="com.heima.Contorller"/>
+    <context:default-servlet-handler/>
+    <!--如果是使用自定义异常的话，那么必须加上driver   -->
+    <contxt:annotation-driven/>
+<!--    这是配置使用Spring异常处理接口进行处理异常,HandlerExceptionResolver-->
+<!--     在springmvc加载前端控制器的时候，会自动加载,因为之前实现了HandlerExceptionResolver，所以
+          <contxt:annotation-driven/> 会自动找到符合该类型的并加载
+-->
+    <bean class="com.heima.Exception.MyHandlerExceptionResolver">
+    </bean>
+</beans>

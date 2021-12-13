@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:security="http://www.springframework.org/schema/security"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/security
+          http://www.springframework.org/schema/security/spring-security.xsd">
+<!--     auto-config表示为在security中会自动配置一些数据，所以我们要为true
+          use-expressions :是否使用表达式：access表达式 false：表示为不使用，必须以ROLE开始，否则会报错
+-->
+   <security:http auto-config="true" use-expressions="false">
+<!--        intercept-url定义拦截Url
+        pattern：表示为拦截哪些url，匹配的规则
+        access表示时访问需要的权限
+-->
+        <security:intercept-url pattern="/**" access="ROLE_ADMIN"/>
+   </security:http>
+<!--     配置认证管理器，实现认证及权限校验，提供用户名，密码，权限-->
+    <security:authentication-manager>
+        <security:authentication-provider>
+            <security:user-service>
+                <security:user name="admin" password="{noop}admin" authorities="ROLE_ADMIN"/>
+                <security:user name="zs" authorities="ROLE_USER" password="{noop}zs"/>
+            </security:user-service>
+        </security:authentication-provider>
+    </security:authentication-manager>
+</beans>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.org.Dao.Userdao">
+    <cache/> <!--表示为这个mapper映射使用二级缓存  -->
+<!--     useCache="true" 表示为在这个mapper中将使用二级缓存,如果想保证每次查询出来的数据都是最新的，我们可以把useCache= "false"-->
+    <select id="FindAll" resultType="com.org.PoJo.User" useCache="false">
+        select * from ssm1
+    </select>
+
+    <update id="add" parameterType="com.org.PoJo.User">
+        update ssm1 set money=money+#{money} where name = #{name};
+    </update>
+
+    <update id="jian" parameterType="com.org.PoJo.User">
+        update ssm1 set money=money-#{money} where name = #{name};
+    </update>
+</mapper>

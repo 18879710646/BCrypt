@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.org.Dao.UserDao">
+
+    <select id="Select" resultMap="SelectList">
+        select a.*,b.* from twoa a,twob b,twoc c where a.id = c.a_id and b.id = c.b_id;
+    </select>
+    <resultMap id="SelectList" type="com.org.Bean.UserB">
+        <result column="id" property="id"/>
+        <result column="department" property="department"/>
+        <collection property="usera" ofType="com.org.Bean.UserA">
+            <result column="id" property="id"/>
+            <result column="name" property="name"/>
+            <result column="sex" property="sex"/>
+            <result column="address" property="address"/>
+            <result column="money" property="money"/>
+        </collection>
+    </resultMap>
+</mapper>

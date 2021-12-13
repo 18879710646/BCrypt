@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+<!--     这里配置的Springg工厂的创建对象  id 就是这个bean的名字， class中填写的是实现类的全限地址-->
+<!--    也就是把接口的实现类交给spring管理（直接是添加到Spring容器的bean中），直接是把实现类添加到bean中，创建一个名称到时候好取出来-->
+<bean id="UserDao" class="com.org.Dao.Impl.UserDaoImpl" scope="singleton"/>
+<!--     scope表示的是作用范围:
+              说明
+    singleton 单列的，表示的是一个sprng容器中只能有一个bean。
+    prototype 多列的  表示的是一个spring容器中可以有多个bean。
+    request   web项目中 表示的是Spring创建的bean是放在request的域中，一个请求内有效。
+    session   web项目中  表示的是Sprng创建的Bean放在session的域中，一次会话内有效。
+
+    singleton: 跟spring相同
+        何时创建：加载spring配置文件，初始化Spring容器的时候
+        何时销毁：当spring容器销毁后
+    prototype: 跟Spring的生命周期不同
+        何时创建：当在getbean的时候创建
+        何时销毁：当长时间不用的时候自动垃圾回收
+
+-->
+</beans>

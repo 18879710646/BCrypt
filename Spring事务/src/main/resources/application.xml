@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context" xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        https://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
+
+    <context:component-scan base-package="com.org"/>
+    <context:property-placeholder location="db.properties"/>
+
+
+<!--    <bean id="crud1" class="com.mchange.v2.c3p0.ComboPooledDataSource" >-->
+<!--        <property name="user" value="${jdbc.user}"/>-->
+<!--        <property name="password " value="${jdbc.password}"/>-->
+<!--        <property name="jdbcUrl" value="${jdbc.url}"/>-->
+<!--        <property name="driverClass" value="${jdbc.driverClass}"/>-->
+<!--    </bean>-->
+
+    <bean id="crud" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+        <property name="user" value="${jdbc.user}"/>
+        <property name="password" value="${jdbc.password}"/>
+        <property name="jdbcUrl" value="${jdbc.url}"/>
+        <property name="driverClass" value="${jdbc.driverClass}"/>
+    </bean>
+<!--    使用jdbc来进行增删改查-->
+    <bean class="org.springframework.jdbc.core.JdbcTemplate" id="jdbcTemplate">
+        <constructor-arg name="dataSource" ref="crud"/>
+    </bean>
+
+<!--    <bean class="org.apache.commons.dbutils.QueryRunner" id="queryRunner">-->
+<!--       <constructor-arg ref="crud" name="ds"/>-->
+<!--    </bean>-->
+<!--    配置事务  :由于事务的控制徐要控制对象的，所以需要把数据源dataSource添加进去    ,事务管理员
+        <property中的name中的datasource是被固定了的写法
+        事务管理员
+-->
+    <bean class="org.springframework.jdbc.datasource.DataSourceTransactionManager" id="tm">
+        <property name="dataSource" ref="crud"/>
+    </bean>
+    <!--     打开事务的注解开关,指定事务的管理员是谁-->
+    <tx:annotation-driven transaction-manager="tm" />
+</beans>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+    <bean id="udao" class="com.org.Dao.Impl.UserImpl"/>
+    <bean id="uce" class="com.org.Service.Impl.ServiceImpl">
+<!--         property中的name表示为在ServiceImpl中有一个变量名为userDao的需要注入（赋值）
+            ref表示的是，引用的是什么类型的，上面我们已经写了一个Bean并且是userdaoImpl的，我们直接让uce的bean 引用udao，然后就会注入进去了
+    -->
+        <property name="userDao" ref="udao"/>
+<!--         这是简单的value值注入，它可以寻找到在ServiceImpl中的变量address，然后把value中的值注入进去-->
+        <property name="address" value="江西"/>
+        <constructor-arg name="userDao" ref="udao"/>
+        <constructor-arg name="address" value="上海"/>
+    </bean>
+</beans>

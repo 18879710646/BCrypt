@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+    <bean id="ue" class="com.org.Dao.Impl.UserDaoImpl">
+        <property name="arr">
+            <array>
+                <value>a1</value>
+                <value>a2</value>
+            </array>
+        </property>
+        <property name="list">
+            <list>
+                <value>l1</value>
+                <value>l2</value>
+            </list>
+        </property>
+        <property name="map">
+            <map>
+                <entry key="m1" value="m1"/>
+                <entry key="m2" value="m2"/>
+            </map>
+        </property>
+        <property name="set">
+            <set>
+                <value>s1</value>
+                <value>s2</value>
+            </set>
+        </property>
+        <property name="properties">
+            <props>
+                <prop key="p1">p1</prop>
+                <prop key="p2">p2</prop>
+            </props>
+        </property>
+    </bean>
+<!--    <bean id="se" class="com.org.Service.Impl.ServiceImpl">-->
+
+<!--        <constructor-arg name="userDao" ref="ue"/>-->
+<!--        <constructor-arg name="address" value="上海"/>-->
+<!--    </bean>-->
+<!--    <bean id="" class="" p:s属性名-ref="Bean的id" -->
+
+    <bean id="se" class="com.org.Service.Impl.ServiceImpl" p:userDao-ref="ue"/>
+<!--     <bean id="" class="" p:属性名="值"-->
+    <bean id="ad" class="com.org.Service.Impl.ServiceImpl" p:address="上海"/>
+
+
+
+</beans>
